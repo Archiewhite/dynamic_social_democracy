@@ -26,8 +26,15 @@ The <span style="color: #c00000;">**SPD**</span> cannot govern by itself yet. Be
 subtitle: -1 resources
 choose-if: resources >= 1
 unavailable-subtitle: Not enough resources.
-on-arrival: resources -= 1; kpd_inter_party_seen += 1
-go-to: kpd_blutmai if blutmai = 1; kpd_rectification_of_history if kpd_relation >= 40 and kpd_rectified_history = 0; kpd_2 if kpd_coalition_success = 1 and kpd_rectified_history = 1; kpd_1 if blutmai = 0
+on-arrival: resources -= 1; kpd_inter_party_seen += 1;
+{!
+    if blutmai: {Q.kpd_thoughts = "blutmai";}
+    else if ((Q.kpd_relation >= 40) && (!Q.kpd_rectified_history)): {Q.kpd_thoughts = "rectify";}
+    else if (!Q.kpd_rectified_history): {Q.kpd_thoughts = "socfash";}
+    else if (!Q.kpd_coalition_success): {Q.kpd_thoughts = "cautious";}
+    else: {Q.kpd_thoughts = "linksfront";}
+!}
+go-to: kpd_blutmai if Q.kpd_thoughts = "blutmai"; kpd_rectification_of_history if Q.kpd_thoughts = "rectify"; kpd_2 if Q.kpd_thoughts = "linksfront"; kpd_1 if Q.kpd_thoughts = "socfash"; kpd_anderthalb if Q.kpd_thoughts = "cautious"
 
 @kpd_1
 on-arrival: kpd_relation += 6*(1 - dissent); communist_coalition += 1 if kpd_inter_party_seen <= 1; reformist_dissent += 2; z_relation -= 2 if z_ideology == "Right"; dvp_relation -= 3; ddp_relation -= 2; lvp_relation -= 3
@@ -55,11 +62,15 @@ on-arrival: kpd_relation -= 3
 
 We have no need to apologize for the actions of Ebert and Noske; it is the <span style="color: #700000;">communists</span>' fault for launching a violent insurrection.
 
-
 @kpd_2
 on-arrival: kpd_relation += 8*(1 - dissent); communist_coalition += 1 if kpd_inter_party_seen <= 1; reformist_dissent += 2; z_relation -= 3; dvp_relation -= 3; lvp_relation -= 3; ddp_relation -= 3
 
 After the success of the coalition government with the <span style="color: #700000;">**KPD**</span>, they are much more amenable to us.
+
+@kpd_anderthalb
+on-arrival: kpd_relation += 7*(1 - dissent); communist_coalition += 1 if kpd_inter_party_seen <= 1; reformist_dissent += 2; z_relation -= 3; dvp_relation -= 3; lvp_relation -= 3; ddp_relation -= 3
+
+Given our willingness to atone for past actions, the <span style="color: #700000;">**KPD**</span> is more inclined to trust us, although some friction still remains given the pressure from Comintern and our party's right.
 
 @kpd_blutmai
 on-arrival: kpd_relation += 3*(1 - dissent); reformist_dissent += 1
