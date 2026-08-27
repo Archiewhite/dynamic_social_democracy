@@ -2,8 +2,8 @@ title: Foreign Policy
 new-page: true
 is-card: true
 tags: govt_affairs, cabinet
-on-arrival: month_actions += 1; foreign_policy_timer += 8
-view-if: spd_in_government = 1 and foreign_minister_party = "SPD" and  foreign_policy_timer <= 0
+on-arrival: month_actions += 1; foreign_policy_timer += 8; konkordat_potency = 1; konkordat_potency += 1 if z_leader == "Kaas"; konkordat_potency -= 1 if abortion_rights; konkordat_potency -= 1 if family_law; konkordat_potency -= 1 if secularized
+view-if: spd_in_government = 1 and foreign_minister_party = "SPD" and foreign_policy_timer <= 0
 card-image: img/portraits/BreitscheidRudolf.jpg
 go-to: fp_menu
 #subtitle: International relations and dealing with Versailles.
@@ -26,6 +26,7 @@ What should our foreign policy priority be?
 - @european_union
 - @european_union_2
 - @concordat_negotiate
+- @concordat_bribe
 - @concordat
 - @support_austria
 - @support_austria_2
@@ -189,11 +190,23 @@ The Allies are grateful of our exposure and repudiation of militarism. Our partn
 @concordat_negotiate
 title: Negotiate a Concordat between the Germany and the Vatican.
 view-if: (prussian_concordat = 1 or not spd_prussia) and reichskonkordat = 0 and reichskonkordat_progress < 4
-on-arrival: reichskonkordat_progress += 1; reichskonkordat_progress += 1 if z_leader == "Kaas"; reichskonkordat_progress -= 1 if abortion_rights; reichskonkordat_progress -= 1 if family_law; z_relation += 3*(1-dissent); dvp_relation -= 1; ddp_relation -= 2; ddp_cohesion -= 0.25; lvp_relation -= 1; foreign_goal_spd_peoples += 1
+choose-if: konkordat_potency > 0
+unavailable-subtitle: We are too forward with secularizing policy for the Church.
+on-arrival: reichskonkordat_progress += konkordat_potency; z_relation += 3*(1-dissent); dvp_relation -= 1; ddp_relation -= 2; ddp_cohesion -= 0.25; lvp_relation -= 1; foreign_goal_spd_peoples += 1
 
 The Roman Catholic Church is interested in furthering relations with the German Republic, seeing us as preferable to the old anti-Catholic policies of the Empire. We are working towards the signing of a Concordat, an agreement between the Vatican and the Republic that formally recognizes the Church's rights and interests in the country. The [? if z_party_name != "CVP": <span style="color: #000000;">Center Party</span>?][? if z_party_name == "CVP": <span style="color: #000000;">**CVP**</span>?] is especially interested in making this agreement. The liberal parties are against this idea.
 
-[? if family_law : Our liberalized divorce policies make it difficult to build relations with the Vatican. ?] [? if abortion : Our legalization of abortion make it difficult to connect with the Church. ?] [? if z_leader == "Kaas" : Kaas from the [? if z_party_name != "CVP": <span style="color: #000000;">Center Party</span>?][? if z_party_name == "CVP": <span style="color: #000000;">**CVP**</span>?] is able to use his connections to speed up negotiations. ?]
+[? if family_law : Our liberalized divorce policies make it difficult to build relations with the Vatican. ?] [? if abortion : Our legalization of abortion make it difficult to connect with the Church. ?] [? if secularized : The Church disapproves of our secularization policy. ?] [? if z_leader == "Kaas" : Kaas from the [? if z_party_name != "CVP": <span style="color: #000000;">Center Party</span>?][? if z_party_name == "CVP": <span style="color: #000000;">**CVP**</span>?] is able to use his connections to speed up negotiations. ?]
+
+@concordat_bribe
+title: Negotiate a Concordat between the Germany and the Vatican through alternate means.
+subtitle: -1 resources
+view-if: (prussian_concordat = 1 or not spd_prussia) and reichskonkordat = 0 and reichskonkordat_progress < 4 and konkordat_potency <= 0
+choose-if: resources >= 1
+unavailable-subtitle: We don't have the resources for this.
+on-arrival: reichskonkordat_progress += 1; resources -= 1; z_relation += 3*(1-dissent); dvp_relation -= 1; ddp_relation -= 2; ddp_cohesion -= 0.25; lvp_relation -= 1; foreign_goal_spd_peoples += 1
+
+The Holy See is willing to resume negotiations — even in the wake of our buccaneering policy of secularization — provided certain incentives.
 
 @concordat
 title: We can sign a Concordat with the Vatican!
