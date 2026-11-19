@@ -1,0 +1,115 @@
+title: Economic Investment
+new-page: true
+is-card: true
+tags: govt_affairs, cabinet
+on-arrival: economic_policy_timer += 8; month_actions += 1; tariffs_factor = 0.5-(0.1*tariffs); state_economy_factor = (1 + 0.3*nationalization_progress + 0.15*socializations); works_factor = (1 + 0.2*works_program); sci_factor = (1 + science_bonus/6)
+view-if: spd_in_government = 1 and economic_minister_party == "SPD" and economic_investment_timer <= 0
+card-image: img/portraits/SchmidtRobert.jpg
+go-to: invest_domestic 
+#subtitle: Can we stimulate our economy via investment?
+
+= Economic Investment
+
+Given our control over the Economic Ministry, we may consider the option of stimulating economic growth via directly subsidizing our industries. This is cheap and will not be objected to, but may empower industry to wield more control over the country.
+
+What can we do?
+
+@invest_domestic
+
+- @invest_heavy: We could subsidize our heavy industry — provided that it would serve the interests of our workers, too.
+- @invest_light: We could subsidize light industry instead, on those same conditions.
+- @invest_infrastructure: We could subsidize our infrastructures — like transportation and construction.
+- @invest_chemical: We could subsidize our chemical industries.
+- @invest_agri: We could subsidize agricultural industries.
+- @invest_foreign: Could we attract foreign investment?
+- @root: Do not look into subsidies.
+- @easy_discard
+- @cancel_advisor_action
+
+@invest_foreign
+
+Alternatively, we could solicit foreign investment into our domestic industry — provided that they are willing to give us money.
+
+- @invest_west: The <span style="color: #002654;">Western</span> <span style="color: #D7141A;">Allies</span>, perhaps?
+- @invest_east: <span style="color: #DC143C;">Pol</span><span style="color: #FFFFFF;">and</span> and <span style="color: #11457E;">Czech</span><span style="color: #FFFFFF;">oslo</span><span style="color: #D7141A;">vakia</span>?
+- @invest_ussr: The <span style="color: #750e0e;">**Soviet Union**</span>?
+- @invest_usa: The <span style="color: #B31942;">United</span> <span style="color: #0A3161;">States</span>?
+- @invest_domestic: Consider domestic investment instead.
+- @root: Do not look into foreign investment.
+- @easy_discard
+
+@invest_heavy
+subtitle: [? if budget >= 2: -2 budget. ?][? if budget < 2: Not enough budget. ?]This will have the greatest effect - both on the economy and the industrial ability to fund bourgeois parties. 
+choose-if: budget >= 2
+on-arrival: budget -= 2; ddp_left += 4; ddp_right += 2; dvp_left += 4; dvp_right += 2; lvp_left += 4; lvp_right += 2; workers_spd += 6*(1-dissent)*state_economy_factor; unemployed -= 2*state_economy_factor; inflation += 1.5*state_economy_factor; economic_growth += 1.5*state_economy_factor; industry_funding += 2
+max-visits: 2
+
+We copiously subsidize our heavy industry — conditional on worker-oriented policy. The industries willing to accept our money and rules flourish, and so do the workers guaranteed decent payment and work conditions.
+
+@invest_light
+subtitle: [? if budget >= 1: -1 budget. ?][? if budget < 1: Not enough budget. ?] The old middle class might consider this a token of goodwill.
+choose-if: budget >= 1
+on-arrival: budget -= 1; ddp_left += 2; ddp_right += 1; dvp_left += 2; dvp_right += 1; lvp_left += 2; lvp_right += 1; workers_spd += 3*(1-dissent)*state_economy_factor; old_middle_spd += (1-dissent)*state_economy_factor; unemployed -= state_economy_factor; inflation += 0.75*state_economy_factor; economic_growth += 0.5*state_economy_factor; industry_funding += 1
+max-visits: 2
+
+We subsidize our light industry — conditional on worker-oriented policy. This contributes to worker employment, but also makes some members of the old middle class more sympathetic to our cause given our willingness to account for economic sectors we have traditionally overlooked.
+
+@invest_infrastructure
+subtitle: [? if budget >= 1: -1 budget. ?][? if budget < 1: Not enough budget. ?][? if works_program > 0: Already existing public works programs will make this more effective. ?]
+choose-if: budget >= 1
+on-arrival: budget -= 1; ddp_left += 2; ddp_right += 1; dvp_left += 2; dvp_right += 1; lvp_left += 2; lvp_right += 1; workers_spd += 3*(1-dissent)*state_economy_factor*works_factor; unemployed -= state_economy_factor*works_factor; inflation += 0.75*state_economy_factor*works_factor; economic_growth += 0.5*state_economy_factor*works_factor; industry_funding += 1
+max-visits: 2
+
+We subsidize our infrastructure, promiting the construction of new buildings, new means of transportation like public roads and railways, and reinforce public utilities. [? if works_program > 0: Past public works programs make our investments more effective. ?]
+
+@invest_chemical
+subtitle: [? if budget >= 1: -1 budget. ?][? if budget < 1: Not enough budget. ?] Our contributions to promoting scientific development can make this more effective.
+choose-if: budget >= 1
+on-arrival: budget -= 1; ddp_left += 2; ddp_right += 1; dvp_left += 2; dvp_right += 1; lvp_left += 2; lvp_right += 1; workers_spd += 3*(1-dissent)*state_economy_factor*sci_factor; unemployed -= state_economy_factor*sci_factor; inflation += 0.75*state_economy_factor*sci_factor; economic_growth += 0.5*state_economy_factor*sci_factor; industry_funding += 1
+max-visits: 2
+
+We subsidize our chemical industries, central to producing coal, agricultural and inorganic chemicals. [? if science>1: Our past investments in scientific research make this more effective. ?]
+
+@invest_agricultural
+subtitle: [? if budget >= 1: -1 budget. ?][? if budget < 1: Not enough budget. ?] Rural working class might consider this a token of goodwill.
+choose-if: budget >= 1
+on-arrival: budget -= 1; ddp_left += 2; ddp_right += 1; dvp_left += 2; dvp_right += 1; lvp_left += 2; lvp_right += 1; rural_spd += 3*(1-dissent)*state_economy_factor; unemployed -= state_economy_factor; inflation += 0.75*state_economy_factor; economic_growth += 0.5*state_economy_factor; industry_funding += 1; peoples_party_support += 1; rural_policy += 1
+max-visits: 2
+
+We subsidize agricultural industries, conditional on better working conditions for the rural working class — which appreciates our intervention.
+
+@invest_west
+subtitle: If the issue of reparations is resolved, this might be a viable option.
+unavailable-subtitle: [? if reparations_resolved == 0: We must first settle the issue of reparations. ?][? if nationalism-5*pacifism >= 55-10*(investment_west_count): We must do more to curb nationalist sentiments. ?][? if west_relation <= 4+2*(investment_west_count): Our relations are too low. ?]
+choose-if: (reparations_resolved == 1) and (nationalism-5*pacifism < 55-10*(investment_west_count)) and (west_relation > 4+2*(investment_west_count))
+on-arrival: economic_growth += (2+return_to_normalcy+eu)*tariffs_factor/state_economy_factor; inflation += (2*tariffs_factor/state_economy_factor); investment_west_count += 1
+max-visits: 2
+
+We coax the <span style="color: #002654;">Western</span> <span style="color: #D7141A;">Allies</span> into investing in our industries, given our efforts to curb nationalist tendencies and resolve reparations. This will stimulate our economy.
+
+@invest_east
+subtitle: If our Eastern neighbours feel safe enough to give us money, this might be a viable option.
+unavailable-subtitle: [? if nationalism-5*pacifism >= 60-10*(investment_east_count): We must do more to curb nationalist sentiments. ?][? if east_relation <= 3+2*(investment_east_count): Our relations are too low. ?]
+choose-if: (nationalism-5*pacifism < 60-10*(investment_east_count)) and (east_relation > 3+2*(investment_east_count))
+on-arrival: economic_growth += (2+return_to_normalcy+eu)*tariffs_factor/state_economy_factor; inflation += (2*tariffs_factor/state_economy_factor); investment_east_count += 1
+max-visits: 2
+
+While <span style="color: #11457E;">Czech</span><span style="color: #FFFFFF;">oslo</span><span style="color: #D7141A;">vakia</span> managed to inherit a respectable apparatus, the <span style="color: #DC143C;">Pol</span><span style="color: #FFFFFF;">ish</span> industry is still developing from its mostly agrarian character. Still, both of those have needs — some of which our own industry can supplant.
+
+@invest_ussr
+subtitle: Do we have a working relationship with them?
+unavailable-subtitle: [? if soviet_relation < 3: Our relations are too low. ?][? if soviet_export < 1: We need a working relationship with the <span style="color: #750e0e;">**Soviet Union**</span> for them to even consider this option. ?]
+choose-if: soviet_export == 1 and soviet_relation >= 3
+on-arrival: economic_growth += (1+return_to_normalcy)*tariffs_factor/state_economy_factor; inflation += tariffs_factor/state_economy_factor; kpd_relation += 10; left_dissent -= 10
+max-visits: 1
+
+The economy of the <span style="color: #750e0e;">**Soviet Union**</span> is isolated from the global markets, which, obviously, complicates matters. Given its developing state, it would rather seek investments than offer them. However, given our working relationship, they are willing to conduct experiments with various forms of assistance, like providing qualified personnel and funding industry — provided it would contribute to exports.
+
+@invest_usa
+subtitle: Are the <span style="color: #B31942;">United</span> <span style="color: #0A3161;">States</span> interested?
+unavailable-subtitle: [? if foreign_aid == 0: They are not interested. ?]
+choose-if: foreign_aid == 1
+on-arrival: economic_growth += (2+return_to_normalcy)*tariffs_factor/state_economy_factor; inflation += tariffs_factor/state_economy_factor
+max-visits: 1
+
+Given the success of the London Economic Conference, the <span style="color: #B31942;">United</span> <span style="color: #0A3161;">States</span> are willing to offer our industry some funding to stimulate economic growth.
