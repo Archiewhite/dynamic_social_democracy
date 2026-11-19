@@ -1,0 +1,31 @@
+title: Rudolf Hilferding
+is-pinned-card: true
+tags: advisor, reformist
+card-image: img/portraits/SchmidtRobert.jpg
+view-if: schmidt_advisor = 1
+new-page: true
+#face-image: img/portraits/SchmidtRobert.jpg
+
+= Robert Schmidt
+
+Schmidt has been a minister in several past cabinets, at times leading the Ministry of Reconstruction charged with reparations, Ministry of Agriculture, and Ministry of Economics [? if economic_minister_party == "SPD": — as he is now ?].
+
+- @econ_policy_
+- @econ_invest_
+- @root: Return to main
+
+@econ_policy_
+title: Economic Policy
+subtitle: Consider an economic plan.
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?] [? if spd_in_government = 0 : <span style="color: #c00000;">SPD</span> not in government: ?] [? if (economic_minister_party != "SPD" and fiscal_minister_party != "SPD") : The <span style="color: #c00000;">SPD</span> does not control a necessary ministry. ?] [? if economic_plan == 0 : We need a policy first. ?]
+choose-if: advisor_action_timer == 0 and spd_in_government == 1 and (economic_minister_party == "SPD" or fiscal_minister_party == "SPD") and economic_plan > 0
+on-arrival: advisor_action_timer = 6; economic_policy_timer -= 12; last_advisor_action = 1
+go-to: economic_policy
+
+@econ_invest_
+title: Economic Investment
+subtitle: Consider means to revitalize our industry.
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?] [? if spd_in_government = 0 : <span style="color: #c00000;">SPD</span> not in government: ?] [? if economic_minister_party != "SPD" : We do not control the Economic Ministry. ?]
+choose-if: advisor_action_timer == 0 and spd_in_government == 1 and economic_minister_party == "SPD"
+on-arrival: advisor_action_timer = 6; economic_investment_timer -= 8; last_advisor_action = 1
+go-to: economic_investment
