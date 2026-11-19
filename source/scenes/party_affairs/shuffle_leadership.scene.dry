@@ -158,6 +158,15 @@ go-to: rm_main_menu
 
 Pfülf has been removed as an advisor. The Reformist faction disapproves.
 
+@remove_schmidt
+title: Remove Schmidt
+view-if: schmidt_advisor = 1
+tags: remove_advisor
+on-arrival: schmidt_advisor = 0; reformist_dissent += 10; n_advisors -= 1
+go-to: rm_main_menu
+
+Schmidt has been removed as an advisor. The Reformist faction disapproves.
+
 
 # labor
 
@@ -487,6 +496,18 @@ go-to: advisor_menu
 tags: reformist_advisor
 
 Antonie Pfülf is now an advisor.
+
+@add_schmidt
+title: Robert Schmidt
+subtitle: Robert Schmidt has at times been Stresemann's Vice-Chancellor, a Minister for Reconstruction, Agriculture and Economics. {!<br><br>!}[? if difficulty < 0 : Actions - Economic Policy, Economic Investment ?]
+is-card: true
+card-image: img/portraits/SchmidtRobert.jpg
+view-if: schmidt_advisor = 0 and n_advisors < 3
+on-arrival: schmidt_advisor = 1; n_advisors += 1; reformist_strength += 5; reformist_dissent -= 7
+go-to: advisor_menu
+tags: reformist_advisor
+
+Robert Schmidt is now an advisor.
 
 
 
