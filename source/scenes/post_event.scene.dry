@@ -4785,7 +4785,7 @@ if (Q.dnef_formed) {
 }
 
 Q.industrial_total_backing = Q.industrial_ddp_backing + Q.industrial_dvp_backing + Q.industrial_lvp_backing + Q.industrial_dnvp_backing + Q.industrial_kvp_backing + Q.industrial_dnf_backing + Q.industrial_z_backing + Q.industrial_dnef_backing;
-Q.industrial_total_backing += Q.industry_funding; //more money to industrialists -> more industrial influence
+Q.industrial_total_backing = (Q.industrial_total_backing * Q.industrial_total_backing) / (Q.industrial_total_backing + Q.industry_funding); //more money to industrialists -> more industrial influence
 
 if (Q.industrial_total_backing < 6 && Q.nsdap_votes >= 17) {
     Q.nsdap_industrial_backing = 1;
