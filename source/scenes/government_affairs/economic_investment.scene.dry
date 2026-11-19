@@ -2,7 +2,7 @@ title: Economic Investment
 new-page: true
 is-card: true
 tags: govt_affairs, cabinet
-on-arrival: economic_policy_timer += 8; month_actions += 1; tariffs_factor = 0.5-(0.1*tariffs); state_economy_factor = (1 + 0.3*nationalization_progress + 0.15*socializations); works_factor = (1 + 0.2*works_program); sci_factor = (1 + science_bonus/6)
+on-arrival: economic_investment_timer += 8; month_actions += 1; tariffs_factor = 0.5-(0.1*tariffs); state_economy_factor = (1 + 0.3*nationalization_progress + 0.15*socializations); works_factor = (1 + 0.2*works_program); sci_factor = (1 + science_bonus/6)
 view-if: spd_in_government = 1 and economic_minister_party == "SPD" and economic_investment_timer <= 0
 card-image: img/portraits/SchmidtRobert.jpg
 go-to: invest_domestic 
