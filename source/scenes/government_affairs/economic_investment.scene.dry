@@ -89,8 +89,8 @@ We coax the <span style="color: #002654;">Western</span> <span style="color: #D7
 
 @invest_east
 subtitle: If our Eastern neighbours feel safe enough to give us money, this might be a viable option.
-unavailable-subtitle: [? if ((nationalism-(5*pacifism)) >= (60-10*(investment_east_count))): We must do more to curb nationalist sentiments. ?][? if east_relation <= 3+2*(investment_east_count): Our relations are too low. ?]
-choose-if: (nationalism-(5*pacifism) < 60-10*(investment_east_count)) and (east_relation > 3+2*(investment_east_count))
+unavailable-subtitle: [? if ((nationalism-(5*pacifism)) >= (50-10*(investment_east_count))): We must do more to curb nationalist sentiments. ?][? if east_relation <= 3+2*(investment_east_count): Our relations are too low. ?]
+choose-if: (nationalism-(5*pacifism) < 50-10*(investment_east_count)) and (east_relation > 3+2*(investment_east_count))
 on-arrival: economic_growth += (2+return_to_normalcy+eu)*tariffs_factor/state_economy_factor; inflation += (2*tariffs_factor/state_economy_factor); investment_east_count += 1
 max-visits: 2
 
