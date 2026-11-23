@@ -701,6 +701,7 @@ Q.investment_east_count = 0;
 // science/education
 Q.science = 0;
 Q.education_science = 0;
+Q.socialist_education = 0; 
 
 // Tax rates relative to 1928 baseline
 Q.lower_tax_rates = 0;
