@@ -26,7 +26,6 @@ go-to: org_media
 
 @welfare
 subtitle: We can manage our mutual aid network to provide relief to the unemployed. [? if black_thursday_seen > 0 : In an age of economic crisis, this will be helpful for improving our standing among them. ?]
-#on-arrival: resources -= 1; workers_aid += 1; unemployed_spd += 5*(1 - dissent)
 go-to: org_welfare
 
 @culture
