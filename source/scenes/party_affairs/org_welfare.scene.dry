@@ -1,0 +1,49 @@
+title: Workers' Welfare
+on-arrival: month_actions += 1; 
+#subtitle: Setting the direction for our mutual aid networks.
+
+= Workers' Welfare.
+
+Die Arbeiterwohlfahrt is our prime welfare organization, meant to support the less privileged: mostly the unemployed, but also the victims of the Great War. It is chaired by Marie Juchacz, who dedicates most of her time to its management.
+
+[? if workers_aid > 0: We have invested in our unemployment fund. ?][? if ((workers_aid > 0) and black_thursday_seen and not (return_to_normalcy)): This will probably help the strain on the unemployment insurance system.?][? if ((workers_aid > 0) and (not black_thursday_seen or return_to_normalcy)): Right now there is no strain on the unemployment insurance system, but, in the case of a crisis, this will lighten it. ?]
+
+[? if vets_aid > 0: We have funded Der Reichsbund der Kriegsbeschädigten. ?]
+
+[? if orphans_aid > 0: We have expanded our childcare charities. ?]
+
+What can we do with it?
+
+- @unemployment: We should increase our unemployment funds.
+- @war_vets: We should look into helping war veterans.
+- @orphans: We should fund our efforts to improve childcare, especially for the orphaned and the fostered.
+- @return: Nothing, for now.
+- @easy_discard
+- @cancel_advisor_action
+
+@unemployment
+subtitle: -1 resources
+choose-if: resources > 0
+unavailable-subtitle: [? if resources < 0: Not enough resources. ?]
+on-arrival: resources -= 1; workers_aid += 1; unemployed_spd += 5*(1 - dissent); workers_spd += 3*(1-dissent); workers_spd += 2*(1-dissent) if black_thursday_seen;
+
+We have increased funding to Workers' Welfare. [? if black_thursday_seen > 0 : In an age of economic crisis, this will be helpful for improving our standing among the unemployed. ?]
+
+@war_vets
+subtitle: -1 resources
+choose-if: resources > 0
+unavailable-subtitle: [? if resources < 0: Not enough resources. ?]
+on-arrival: resources -= 1; unemployed_spd += (3*(1+medical_research) - vets_aid)*(1 - dissent); workers_spd += (3*(1+medical_research)-vets_aid)*(1 - dissent); vets_aid += 1; nationalism -= (3+medical_research)*(1-dissent);
+
+Der Reichsbund der Kriegsbeschädigten is nominally independent, but its leadership has historically been associated with the <span style="color: #c00000;">**SPD**</span>. By funding its operations, we help the veterans — many of them disabled — to live decent lives. [? if medical_research >= 1: Furthermore, our investment in medical research on the government level contributed to the development of better prosthetics — and higher quality of life. ?]
+
+@orphans
+subtitle: -1 resources
+choose-if: resources > 0
+unavailable-subtitle: [? if resources < 0: Not enough resources. ?]
+on-arrival: resources -= 1; orphan_aid += 1; unemployed_spd += 2*(1 - dissent); workers_spd += 2*(1 - dissent); new_middle_spd += 2*(1 - dissent); old_middle_spd += 2*(1 - dissent); rural_spd += 2*(1 - dissent); catholics_spd += 2*(1 - dissent); z_relation += 3*(1-dissent);
+
+Our efforts support the practical implementation of the National Youth Welfare Law, helping to provide education and decent life quality to underprivileged children. Our efforts are appreciated by the overburdened Jugendämter and the <span style="color: #c00000;">catholic</span> charities.
+
+
+
