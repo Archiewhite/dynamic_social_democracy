@@ -1,50 +1,77 @@
-title: Workers' Welfare
-on-arrival: month_actions += 1; 
+title: A Social Democratic Life
+on-arrival: month_actions += 1; cultural_factor = 9-(2*cultural_organizations); cultural_factor = 3 if cultural_factor < 3; edu_soc_progress = 0; edu_soc_progress += 0.5 if nationalization_adopted; edu_soc_progress += nationalization_progress+(0.5*socializations)+(0.5*works_councils);
 #subtitle: Setting the direction for our sports leagues, educational, and cultural programs.
 
 = A Social Democratic Life
 
-It is not enough for the <span style="color: #c00000;">**SPD**</span> to solely be a political party. The Worker Singer's League, Worker's Sports, and our schools and libraries are crucial to our members' lives. By funding and sustaining these organizations, we provide more 
-  
-  
-  
-  Funding these organizations makes our members more committed to the party, even when our policies might not be to their liking.
-  
-[? if workers_aid > 0: We have invested in our unemployment fund. ?][? if ((workers_aid > 0) and black_thursday_seen and not (return_to_normalcy)): This will probably help the strain on the unemployment insurance system.?][? if ((workers_aid > 0) and (not black_thursday_seen or return_to_normalcy)): Right now there is no strain on the unemployment insurance system, but, in the case of a crisis, this will lighten it. ?]
+It is not enough for the <span style="color: #c00000;">**SPD**</span> to solely be a political party. The Worker Singer's League, Worker's Sports, and our schools and libraries are crucial to our members' lives. By funding and sustaining these organizations, we raise the quality of leisure time assured by the eight-hour working day; furthermore, funding these organizations makes our members more committed to the party, even when our policies might not be to their liking. [? if cultural_organizations >= 1: We have already invested a certain amount of resources in our cultural organizations. ?]
 
-[? if vets_aid > 0: We have funded Der Reichsbund der Kriegsbeschädigten. ?]
+Our workers' sports association, Arbeiter-Turn- und Sportbund (or ATUS), is open to all socialist workers, [? if sports_balance == 0: although it is committed to a reformist course and has expelled its more revolutionary-minded members. ?][? if sports_balance == -1: and has reintegrated the more revolution-minded members that it has formerly expelled. ?][? if sports_balance == 1: and has loosened its prohibition on association with bourgeois-minded sports' clubs. ?]
 
-[? if orphans_aid > 0: We have expanded our childcare charities. ?]
+[? if sa_strength > 500 : It might, however, feel frivolous to spend time on sports and choirs when the <span style="color: #7A3C00;">fascists</span> are murdering us in the streets. ?]
 
-What can we do with it?
+What shall we do?
 
-- @unemployment: We should increase our unemployment funds.
-- @war_vets: We should look into helping war veterans.
-- @orphans: We should fund our efforts to improve childcare, especially for the orphaned and the fostered.
+- @invest: Invest more money into our cultural organizations.
+- @sports_right_1: Lift the prohibition on exhibition matches.
+- @sports_left_1: Repair our connections with breakaway <span style="color: #700000;">communist</span>-associated clubs.
+- @sports_iron_front: Tighten the associations between ATSB and the Iron Front.
+- @edu_dem: Hold lectures on democracy, <span style="color: #7A3C00;">authoritarianism</span>, and the value of the <span style="color: #000000;">rep</span><span style="color: #DD0000;">ubl</span><span style="color: #FFCC00;">ican</span> system.
+- @edu_pac: Hold lectures on pacifism, <span style="color: #3E88B3;">**nationalism**</span>, the history of the Great War, and the stab-in-the-back myth.
+- @edu_soc: Hold lectures on <span style="color: #9B0000;">socialism</span>, <span style="color: #9B0000;">Marxist</span> theory, and class struggle.
 - @return: Nothing, for now.
 - @easy_discard
-- @cancel_advisor_action
 
-@unemployment
+@invest
 subtitle: -1 resources
 choose-if: resources > 0
 unavailable-subtitle: [? if resources < 0: Not enough resources. ?]
-on-arrival: resources -= 1; workers_aid += 1; unemployed_spd += 5*(1 - dissent); workers_spd += 3*(1-dissent); workers_spd += 2*(1-dissent) if black_thursday_seen;
+on-arrival: resources -= 1; cultural_organizations += 1; left_dissent -= cultural_factor; center_dissent -= cultural_factor; labor_dissent -= cultural_factor; reformist_dissent -= cultural_factor; neorevisionist_dissent -= cultural_factor
 
-We have increased funding to Workers' Welfare. [? if black_thursday_seen > 0 : In an age of economic crisis, this will be helpful for improving our standing among the unemployed. ?]
+Our cultural programs have[? if cultural_organizations >= 2: further ?]expanded their reach and membership. [? if cultural_organizations >= 2: While still effective at mollifying dissenting members, there's only so much that funding these cultural programs can do to temper a disagreement caused by policy. ?]
 
-@war_vets
+@sports_right_1
+subtitle: This is favoured by reformist-minded members of the party.
+unavailable-subtitle: We need a non-socialist team to play against.
+view-if: sports_balance == 0
+choose-if: (z_relation >= 45) or (ddp_relation >= 45) or ((lvp_relation >= 45) and (lvp_ideology == "Left"))
+on-arrival: sports_balance = 1; left_dissent += 10; reformist_dissent -= 10; workers_spd += (4+cultural_organizations)*(1-dissent); new_middle_spd += (1+cultural_organizations)*(1-dissent); old_middle_spd += (1+cultural_organizations)*(1-dissent); rural_spd += (cultural_organizations)*(1-dissent); z_relation += 5*(1-dissent) if z_relation >= 45; ddp_relation += 5*(1-dissent) if ddp_relation >= 45; lvp_relation += 5*(1-dissent) if ((lvp_relation >= 45) and (lvp_ideology == "Left")); rb_militancy += 0.01;
+
+Historically, socialist and bourgeois organizations had little contact due to ideological conflicts as well as mutually imposed prohibitions on interactions, and ATUS explicitly discouraged exhibition matches against bourgeois parties. However, given our relations with our historical partners, we may specifically arrange a few matches with them.
+
+The left wing of our party is demonstrably unhappy, but we make inroads into those dissatisfied with the competitive character of bourgeois sport.
+
+@sports_left_1
+subtitle: This is favoured by left-minded members of the party.
+unavailable-subtitle: We cannot reasonably expect the <span style="color: #700000;">**KPD**</span> to consent to this.
+view-if: sports_balance == 0
+choose-if: kpd_relation >= 45
+on-arrival: sports_balance = -1; left_dissent -= 10; reformist_dissent += 10; workers_spd += (7+cultural_organizations)*(1-dissent); unemployed_spd += (4+cultural_organizations)*(1-dissent); z_relation -= 5; ddp_relation -= 5; dvp_relation -= 5; lvp_relation -= 5; kpd_relation += 8*(1-dissent); rb_militancy += 0.03; communist_coalition += 1
+
+We publically apologize for expelling the <span style="color: #700000;">communist</span>-aligned members from ATUS over their demands to commit to a revolutionary course, and reiterate that ATUS is open to any and all workers who share our <span style="color: #c00000;">socialist</span> values. While this does not mend all the damage, the <span style="color: #700000;">**KPD**</span> appreciates the gesture and approves of reintegration.
+
+@sports_iron_front
 subtitle: -1 resources
 choose-if: resources > 0
+view-if: iron_front_formed == 1
 unavailable-subtitle: [? if resources < 0: Not enough resources. ?]
-on-arrival: resources -= 1; unemployed_spd += (3*(1+medical_research) - vets_aid)*(1 - dissent); workers_spd += (3*(1+medical_research)-vets_aid)*(1 - dissent); vets_aid += 1; nationalism -= (3+medical_research)*(1-dissent);
+on-arrival: resources -= 1; rb_strength += 100+(50*cultural_organizations); rb_militancy += 0.01+(0.005*cultural_organizations); nationalism -= cultural_organizations*(1-dissent); pro_republic += cultural_organizations*(1-dissent)
 
-Der Reichsbund der Kriegsbeschädigten is nominally independent, but its leadership has historically been associated with the <span style="color: #c00000;">**SPD**</span>. By funding its operations, we help the veterans — many of them disabled — to live decent lives. [? if medical_research >= 1: Furthermore, our investment in medical research on the government level contributed to the development of better prosthetics — and higher quality of life. ?]
+We incentivize more people to sign up for the Iron Front, rallying them to stand in solidarity against the <span style="color: #7A3C00;">far</span>-[? if dnvp_ideology == "Radical": <span style="color: #3E88B3;">right</span>?][? if dnvp_ideology == "Moderate": <span style="color: #003755;">right</span>?].
 
-@orphans
-subtitle: -1 resources
-choose-if: resources > 0
-unavailable-subtitle: [? if resources < 0: Not enough resources. ?]
-on-arrival: resources -= 1; orphan_aid += 1; unemployed_spd += 2*(1 - dissent); workers_spd += 2*(1 - dissent); new_middle_spd += 2*(1 - dissent); old_middle_spd += 2*(1 - dissent); rural_spd += 2*(1 - dissent); catholics_spd += 2*(1 - dissent); z_relation += 3*(1-dissent);
+@edu_dem
+on-arrival: democratization += 1; pro_republic += (1+(0.5*cultural_organizations))*(1-dissent); workers_spd += (2+(0.5*cultural_organizations))*(1-dissent); unemployed_spd += (1+(0.5*cultural_organizations))*(1-dissent); new_middle_spd += (2+(0.5*cultural_organizations))*(1-dissent);
 
-Our efforts support the practical implementation of the National Youth Welfare Law, helping to provide education and decent life quality to underprivileged children. Our efforts are appreciated by the overburdened Jugendämter and the <span style="color: #c00000;">catholic</span> charities.
+Our lectures cover historical development of society and the gradual progression towards democracy, framing <span style="color: #808080;">monarchy</span> as a system incapable of adequately responding to the challenges of the modern world, as well as highlighting the achievements of our democratizing policy.
+
+@edu_pac
+on-arrival: pacifism += 1; nationalism -= (2+(0.5*cultural_organizations)*(1+stab_in_the_back_rewrite))*(1 - dissent); workers_spd += (2+(0.5*cultural_organizations)+stab_in_the_back_rewrite)*(1 - dissent); unemployed_spd += (1+(0.5*cultural_organizations)+stab_in_the_back_rewrite)*(1-dissent); new_middle_spd += (2+(0.5*cultural_organizations)+stab_in_the_back_rewrite)*(1-dissent);
+
+Our lectures cover stories of survivors of the Great War, as well as the history of the stab-in-the-back myth, its perpetrators and beneficiaries. While Hindenburg's personality cult is hard to challenge, it is still tainted by past association with Erich Ludendorff, his quartermeister general responsible for participation in two putsches and several paganist publications too odious for the generally (even if only nominally) Christian public.
+
+@edu_soc
+on-arrival: socialism += (1+(0.5*cultural_organizations))*(1-dissent); workers_spd += (1+edu_soc_progress+(0.5*cultural_organizations))*(1-dissent); unemployed_spd += (1+(0.5*edu_soc_progress)+(0.5*cultural_organizations))*(1-dissent); rural_spd += (1+(0.25*edu_soc_progress)+(0.5*cultural_organizations)) if rural_conscious == 1; new_middle_spd += (1+(0.25*edu_soc_progress)+(0.5*cultural_organizations)) if new_middle_conscious == 1;
+
+Our lectures cover both <span style="color: #9B0000;">Marxist</span> theory and philosophy necessary to understand its historical development, as well as their practical applications and the achievements of the <span style="color: #9B0000;">socialist</span> movement worldwide. [? if (new_middle_conscious or rural_conscious): Aside from proletarian workers, our lectures also attract others who work for a living. ?]
+
+[? if edu_soc_progress > 0: Our messaging is more effective thanks to our accomplishments to democratize the economy while in government. ?]
