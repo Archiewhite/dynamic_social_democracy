@@ -23,16 +23,14 @@ on-arrival: advisor_action_timer = 6; workers_spd += 4*(1-dissent); unemployed_s
 
 Our message of class struggle appeals to the left wing of the working class, while potentially alienating the middle class. [? if nationalization_progress > 0 : Our achievements in nationalization have assisted our messaging. ?]
 
-
 @socialist_youth
-title: Support the <span style="color: #c00000;">Socialist</span> Youth
-subtitle: We must end our reputation as a party for old men by increasing funding to the youth organizations. -1 resources
-unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?] [? if resources <= 0 : Not enough resources. ?]
-choose-if: advisor_action_timer = 0 and resources > 0
-view-if: not rb_explode
-on-arrival: advisor_action_timer = 6; resources -= 1; left_strength += 5; left_dissent -= 3; rb_strength += 50; rb_militancy += 0.025; workers_spd += 2*(1-dissent); new_middle_spd += 1; radicalization += 1
+title: Direct the <span style="color: #c00000;">Socialist</span> Youth
+subtitle: Seydewitz is affiliated with our youth organizations.
+unavailable-subtitle: [? if advisor_action_timer > 0 : [+ advisor_action_timer +] months before next advisor action. ?]
+choose-if: advisor_action_timer = 0
+on-arrival: advisor_action_timer = 6; last_advisor_action = 1
+go-to: org_youth
 
-Seydewitz supports building up the <span style="color: #c00000;">Socialist</span> Youth, which attracts support to the Left and increases the militancy of the Reichsbanner.
 
 @against_toleration
 title: Against toleration
