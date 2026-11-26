@@ -1,0 +1,57 @@
+title: Socialist Workers' Youth
+on-arrival: month_actions += 1; 
+#subtitle: Setting the direction for our youth organizations.
+
+= Socialist Workers' Youth
+
+Like many other workers' parties, we have a youth movement meant to educate young men and women — and bring them into the fold of the party, the SAJ. It is chaired by Franz Lepinski.
+
+What can we do with it?
+
+- @fund: We should direct more money to SAJ.
+- @steer_left: We can steer the party towards its left wing.
+- @steer_neorev: We can give more voice to the neorevisionists.
+- @urge_turnout: Ensure higher turnout among younger voters.
+- @picket_kwg: Organize a picketing of the Kaiser Wilhelm Institute of Anthropology, Human Heredity, and Eugenics.
+- @return: Nothing, for now.
+- @easy_discard
+- @cancel_advisor_action
+
+@fund
+subtitle: -1 resources
+choose-if: resources > 0
+unavailable-subtitle: [? if resources < 1: Not enough resources. ?]
+on-arrival: resources -= 1; rb_strength += 50; rb_militancy += 0.02; young_socialists += 1; left_strength += 5; neorevisionist_strength += 5; radicalization += 1;
+
+We spend our resources to expand our reach amongst the youth. The more radical adolescents and young adults tend to flock to the left[? if neorevisionism: and the neorevisionist. ?][? if not neorevisionism:. ?]
+
+@steer_left
+subtitle: -1 resources
+view-if: young_socialists > 0
+choose-if: (resources > 0) and (left_dissent < 60)
+unavailable-subtitle: [? if resources < 1: Not enough resources. ?][? if left_dissent >= 60: The left is too alienated. ?]
+on-arrival: resources -= 1; rb_strength += 50; rb_militancy += 0.02; left_strength += 10; left_dissent -= 10; reformist_dissent += 10; young_socialists += 1; radicalization += 1; kpd_relations += 3*(1-dissent); kpd_nazi_urgency += 1;
+
+The revolution-minded youth are given priority in discussion of policy and ideological direction, calling for closer ties with the <span style="color: #700000;">**KPD**</span> for the sake of a <span style="color: #700000;">united</span> <span style="color: #c00000;">front</span> against <span style="color: #7A3C00;">**NSDAP**</span>. This tends to alienate the older, more reform-minded members of the party.
+
+@steer_neorev
+subtitle: -1 resources
+view-if: (young_socialists > 0) and (neorevisionism)
+choose-if: (resources > 0) and (neorevisionist_dissent < 60)
+unavailable-subtitle: [? if resources < 1: Not enough resources. ?][? if neorevisionist_dissent >= 60: The neorevisionists are too alienated. ?]
+on-arrival: resources -= 1; rb_strength += 50; rb_militancy += 0.02; neorevisionist_strength += 10; neorevisionist_dissent -= 10; center_dissent += 10; young_socialists += 1; radicalization += 1; peoples_party_support += 1; nazi_urgency += 1;
+
+The "new reformist" youth are given priority in discussion of policy and ideological direction, calling for adoption of more striking and broad-reaching techniques. This tends to alienate the centrist members of the party, more interested in maintaining the ideological coherence.
+
+@urge_turnout
+on-arrival: workers_spd += 2*(1+young_socialists)*(1-dissent); new_middle_spd += 2*(1+young_socialists)*(1-dissent); pro_republic += (1+young_socialists)*(1-dissent);
+
+Our youth organizations conduct outreach among younger voters, engaging them politically and urging them to show up to the voting booths — after all, democracy only works if the people actually participate.  
+
+@picket_kwg
+view-if: (nationalism <= 50) and (young_socialists >= 2)
+choose-if: prussian_police_loyalty >= 0.6
+unavailable-subtitle: The police will not tolerate this.
+on-arrival: nationalism -= (2+confronting_antisemitism+young_socialists)*(1-dissent); workers_nsdap -= (1+confronting_antisemitism+young_socialists)*(1-dissent); new_middle_nsdap -= (1+confronting_antisemitism+young_socialists)*(1-dissent); radicalization += 1; prussian_police_loyalty -= 0.01;
+
+The students affiliated with SAJ picket the Institute, accusing it of using its standing as an academic institution to advance Völkish ideology instead of conducting genuine scientific research.
